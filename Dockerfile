@@ -39,6 +39,7 @@ RUN set -ex; \
 	ibus-gtk \
 	ibus-gtk3 \
 	ibus-qt4 \
+	qemu-system qemu-utils python3 python3-pip \
     && apt-get autoclean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*
@@ -62,4 +63,9 @@ RUN chmod +x /app/expect_vnc.sh
 
 RUN echo xfce4-session >~/.xsession
 
+RUN git clone https://github.com/jamiehoszeyui/macOS-Simple-KVM /macos
+RUN cd /macos
+RUN bash jumpstart.sh --mojave
+RUN qemu-img create -f qcow2 MyDisk.qcow2 64G
+RUN 
 CMD ["/app/run.sh"]
